@@ -5,7 +5,8 @@ const sauceCtrl = require('../controllers/sauce_ctrl');
 
 router.get('/', sauceCtrl.getAllSauces);
 //router.post('/', sauceCtrl.postOneSauce);
-//router.get('/:id', teddyCtrl.getOneTeddy);
-//router.post('/order', teddyCtrl.orderTeddies);
-
+//router.get('/:id', sauceCtrl.getOneSauce);
+//router.put('/:id', sauceCtrl.putOneSauce);
+//router.delete('/:id', sauceCtrl.deleteOneSauce);
+//router.post('/:id/like', sauceCtrl.likeOneSauce);
 module.exports = router;
