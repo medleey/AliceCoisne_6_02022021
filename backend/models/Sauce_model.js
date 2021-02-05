@@ -9,3 +9,5 @@ const teddySchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Teddy', teddySchema);
+
+// on les change pas de suite 
