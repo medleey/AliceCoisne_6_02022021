@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 
-const teddySchema = mongoose.Schema({
+const sauceSchema = mongoose.Schema({
   name: { type: String, required: true },
-  price: { type: Number, required: true },
+  manufacturer: { type: String, required: true },
   description: { type: String, required: true },
-  colors: { type: [String], required: true },
-  imageUrl: { type: String, required: true }
+  mainPepper: { type: String, required: true },
+  imageUrl: { type: String, required: true },
+  heat: { type: Number, required: true },
+  likes: { type: Number, required: true },
+  dislikes: { type: Number, required: true },
+  userLiked: { type: [String], required: true },
+  userDisliked: { type: [String], required: true },
 });
 
-module.exports = mongoose.model('Teddy', teddySchema);
+module.exports = mongoose.model('Sauce', sauceSchema);
 
 // on les change pas de suite 
