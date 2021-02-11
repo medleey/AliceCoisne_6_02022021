@@ -2,18 +2,18 @@ const uuid = require('uuid/v1');
 const Sauce = require('../models/sauce_model');
 const fs = require('fs');
 
-exports.getAllSauces = (req, res, next) => {
+exports.getAllSauces = (req, res, next) => { //req = request, res = response 
   Sauce.find()
-    .then(sauces => res.status(200).json(sauces))
+    .then(sauces => res.status(200).json(sauces)) //find va chercher quelque chose, va chercher toutes les sauce de la fonction au dessus
     .catch(error => res.status(400).json({ error }));
 }
 
 exports.postOneSauce = (req, res, next) => { //pour publier la sauce 
-  const sauceObject = JSON.parse(req.body.sauce)
-  delete sauceObject._id;
-  const sauce = new Sauce({
-    ...sauceObject,//spread ... utilisé pour faire la copie de tous les éléments de req.body
-    imageURL: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  const sauceObject = JSON.parse(JSON.stringify(req.body))
+  //delete sauceObject._id;
+  const sauce = new Sauce({ //converti la sauce en model, sauce qui est dans la bdd
+    ...sauceObject//spread ... utilisé pour faire la copie de tous les éléments de req.body
+    //imageURL: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
   sauce.save() // renvoie une Promise
     .then(() => res.status(201).json({ message: 'Sauce enregistrée!' })) //réponse 201 de réussite
@@ -38,6 +38,7 @@ exports.putOneSauce = (req, res, next) => {
 }
 
 exports.deleteOneSauce = (req, res, next) => { //permet de supprimer une sauce 
+  console.log('test')
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
       const filename = thing.imageUrl.split('/images/')[1];
