@@ -12,16 +12,19 @@ exports.getAllSauces = (req, res, next) => { //req = request, res = response
 }
 
 exports.postOneSauce = (req, res, next) => { //pour publier la sauce 
-  const sauceObject = JSON.parse(JSON.stringify(req.body.sauce))
-  res.status(201).json({ message: 'Sauce enregistrée!' })
-  //delete sauceObject._id;
-  //const sauce = new Sauce({ //converti la sauce en model, sauce qui est dans la bdd
-    //...sauceObject//spread ... utilisé pour faire la copie de tous les éléments de req.body
-    //imageURL: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  //});
-  //sauce.save() // renvoie une Promise
-    //.then(() => res.status(201).json({ message: 'Sauce enregistrée!' })) //réponse 201 de réussite
-    //.catch(error => res.status(400).json({ error })); // message d'erreur générée par mongoose + code erreur 400
+  const sauceObject = JSON.parse(req.body.sauce);
+  const sauce = new Sauce({ //converti la sauce en model, sauce qui est dans la bdd
+    ...sauceObject,//spread ... utilisé pour faire la copie de tous les éléments de req.body
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    likes: 0,
+    dislikes: 0,
+    usersLiked: [],
+    usersDisliked: [],
+  });
+
+  sauce.save() // renvoie une Promise
+    .then(() => res.status(201).json({ message: 'Sauce enregistrée!' })) //réponse 201 de réussite
+    .catch(error => res.status(400).json({ error })); // message d'erreur générée par mongoose + code erreur 400
 };
 
 exports.getOneSauce = (req, res, next) => {
@@ -41,26 +44,24 @@ exports.putOneSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 }
 
-/*exports.deleteOneSauce = (req, res, next) => { //permet de supprimer une sauce 
-  console.log('test')
+exports.deleteOneSauce = (req, res, next) => { //permet de supprimer une sauce 
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
-      const filename = thing.imageUrl.split('/images/')[1];
+      const filename = sauce.imageUrl.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
         Sauce.deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
           .catch(error => res.status(400).json({ error }));
       });
     })
-    .catch(error => res.status(500).json({ error }));
-};*/
-
-
-exports.deleteOneSauce = (req, res, next) => {
-Sauce.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
-    .catch(error => res.status(400).json({ error }));
 };
+
+
+/*exports.deleteOneSauce = (req, res, next) => {
+  Sauce.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
+    .catch(error => res.status(400).json({ error }));
+};*/
 
 exports.likeOneSauce = (req, res, next) => {
   Sauce.likeOne

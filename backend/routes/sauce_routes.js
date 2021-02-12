@@ -4,7 +4,7 @@ const router = express.Router();
 const sauceCtrl = require('../controllers/sauce_ctrl');
 const sauce = require('../routes/sauce_routes');
 const auth = require('../middleware/auth');
-//const multer = require('../middleware/multer-config');
+const multer = require('../middleware/multer-config');
 
 
 router.get('/', auth, sauceCtrl.getAllSauces); //auth permet de devoir etre connecté pour agir avec un élément 
