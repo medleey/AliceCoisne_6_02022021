@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const sauceRoutes = require('./routes/sauce_routes');
+const sauceRoutes = require('./routes/sauce_routes'); //en local
 const userRoutes = require('./routes/user_routes');
 
-mongoose.connect(
+mongoose.connect( //permet de se connecter à mongoose 
   'mongodb+srv://AliceCoisne_P6_OC:GrIw3e@cluster0.myt7k.mongodb.net/<dbname>?retryWrites=true&w=majority',
   { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user_model');
 
-
+//POUR S'INSCRIRE
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -20,12 +20,12 @@ exports.signup = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
-
+//POUR SE CONNECTER
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  User.findOne({ email: req.body.email }) //va rechercher l'adresse mail entrée 
     .then(user => {
       if (!user) {
-        return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+        return res.status(401).json({ error: 'Utilisateur non trouvé !' }); //si le user n'est pas trouvé, va afficher un message d'erreur 
       }
       console.log(req.body.password);
       console.log(user.password); 
