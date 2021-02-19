@@ -44,9 +44,9 @@ exports.login = (req, res, next) => {
           });
         })
         .catch(error => {
-          res.status(500).json({ error: 'coucou' });
+          res.status(500).json({ error });
           console.log(error)
         });
     })
-    .catch(error => res.status(500).json({ error: 'au revoir' }));
+    .catch(error => res.status(500).json({ error }));
 };
