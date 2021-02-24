@@ -6,8 +6,10 @@ const path = require('path');
 const sauceRoutes = require('./routes/sauce_routes'); //en local
 const userRoutes = require('./routes/user_routes');
 
+require('dotenv-expand')(require('dotenv').config()); // in just single line
 mongoose.connect( //permet de se connecter à mongoose 
-  'mongodb+srv://AliceCoisne_P6_OC:GrIw3e@cluster0.myt7k.mongodb.net/<dbname>?retryWrites=true&w=majority',
+  process.env.DB_HOST,
+  //'mongodb+srv://AliceCoisne_P6_OC:GrIw3e@cluster0.myt7k.mongodb.net/<dbname>?retryWrites=true&w=majority',
   { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Successfully connected to MongoDB Atlas!');
@@ -26,7 +28,7 @@ app.use((req, res, next) => { //cors
   next();
 });
 
-app.use(bodyParser.json());
+app.use(bodyParser.json()); //fichier de configuration 
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
