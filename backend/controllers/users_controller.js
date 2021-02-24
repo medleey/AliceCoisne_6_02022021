@@ -7,7 +7,17 @@ const User = require('../models/user_model');
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
-      //ajouter regexp
+      //ajouter regexp 
+      const reEmail = (/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i);
+      let formValide = reEmail.test(email.toLowerCase());
+      if (formValide) { 
+        email
+        .then(() => res.status(201).json({
+          message: 'mail ok'
+        }))
+        .catch(error => res.status(400).json({ 
+          message: 'adresse mail non valide' }));
+        };
       const user = new User({
         email: req.body.email,
         password: hash
