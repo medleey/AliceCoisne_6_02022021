@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); //données de cryptage et hachage 
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user_model');
@@ -7,6 +7,7 @@ const User = require('../models/user_model');
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
+      //ajouter regexp
       const user = new User({
         email: req.body.email,
         password: hash
@@ -27,9 +28,7 @@ exports.login = (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' }); //si le user n'est pas trouvé, va afficher un message d'erreur 
       }
-      console.log(req.body.password);
-      console.log(user.password); 
-      bcrypt.compare(req.body.password, user.password)
+      bcrypt.compare(req.body.password, user.password) //Compare le password dans la BDD avec celui du user 
         .then(valid => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
