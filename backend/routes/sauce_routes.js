@@ -6,7 +6,7 @@ const sauce = require('../routes/sauce_routes');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
- //auth permet de devoir etre connecté pour agir avec un élément 
+//auth permet de devoir etre connecté pour agir avec un élément 
 router.get('/', auth, sauceCtrl.getAllSauces);
 router.post('/', auth, multer, sauceCtrl.postOneSauce);
 router.get('/:id', auth, sauceCtrl.getOneSauce);
@@ -16,3 +16,4 @@ router.post('/:id/like', auth, sauceCtrl.likeOrDislikeOneSauce);
 
 
 module.exports = router;
+

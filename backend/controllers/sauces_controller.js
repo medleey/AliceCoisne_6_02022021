@@ -1,4 +1,4 @@
-const uuid = require('uuid/v1');
+const uuid = require('uuid/v1'); //identifiant unique
 const Sauce = require('../models/sauce_model');
 const fs = require('fs');
 
@@ -68,16 +68,16 @@ exports.likeOrDislikeOneSauce = (req, res, next) => {
             Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId }, _id: req.params.id }) //$push:ajoute le tableau entier en un seul élément
               .then(() => res.status(201).json({ message: "Vous avez aimé cette sauce !" }))
               .catch((error) => {
-                res.status(400).json({error});
+                res.status(400).json({ error: error });
               });
           }
-          break; //termine ma boucle
+          break; //évite l'exécution automatique du code dans la case suivante
         case -1: //dans le cas où le user dislike la sauce
           if (!sauce.usersDisliked.includes(req.body.userId)) {
             Sauce.updateOne({ _id: req.params.id }, { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId }, _id: req.params.id })
               .then(() => res.status(201).json({ message: "Vous avez disliké cette sauce !" }))
               .catch((error) => {
-                res.status(400).json({error}); 
+                res.status(400).json({ error: error }); 
               });
           }
           break;
@@ -86,13 +86,13 @@ exports.likeOrDislikeOneSauce = (req, res, next) => {
             Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId }, _id: req.params.id })
               .then(() => res.status(201).json({ message: "Like ajouté avec succès !" }))
               .catch((error) => {
-                res.status(400).json({error});
+                res.status(400).json({ error: error });
               });
           } else {
             Sauce.updateOne({ _id: req.params.id }, { $inc: { dislikes: -1 }, $pull: { usersDisliked: req.body.userId }, _id: req.params.id })
               .then(() => res.status(201).json({ message: "Like ajouté avec succès !" }))
               .catch((error) => {
-                res.status(400).json({error});
+                res.status(400).json({ error: error });
               });
           }
           break;
@@ -100,7 +100,7 @@ exports.likeOrDislikeOneSauce = (req, res, next) => {
     })
     .catch((error) => {
       res.status(400).json({
-        error,
+        error: error,
       });
     });
 };
