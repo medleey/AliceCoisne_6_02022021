@@ -13,7 +13,7 @@ exports.signup = (req, res, next) => {
       if (formValide) { 
         email
         .then(() => res.status(201).json({
-          message: 'mail ok'
+          message: 'adresse mail valide'
         }))
         .catch(error => res.status(400).json({ 
           message: 'adresse mail non valide' }));
@@ -36,7 +36,7 @@ exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email }) //va rechercher l'adresse mail entrée 
     .then(user => {
       if (!user) {
-        return res.status(401).json({ error: 'Utilisateur non trouvé !' }); //si le user n'est pas trouvé, va afficher un message d'erreur 
+        return res.status(401).json({ error: 'Utilisateur non trouvé !' }); 
       }
       bcrypt.compare(req.body.password, user.password) //Compare le password dans la BDD avec celui du user 
         .then(valid => {
@@ -54,7 +54,6 @@ exports.login = (req, res, next) => {
         })
         .catch(error => {
           res.status(500).json({ error });
-          console.log(error)
         });
     })
     .catch(error => res.status(500).json({ error }));

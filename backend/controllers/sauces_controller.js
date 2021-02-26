@@ -63,7 +63,7 @@ exports.likeOrDislikeOneSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }) //recherche l'id de la sauce
     .then((sauce) => {
       switch (req.body.like) {
-        case 1: //cas où le user like la sauce
+        case 1: //cas où le user like la sauce 
           if (!sauce.usersLiked.includes(req.body.userId)) { //identifie le user et vérfie si le user à deja like ou non - ne pas faire confiance aux infos qu'on recoit
             Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId }, _id: req.params.id }) //$push:ajoute le tableau entier en un seul élément
               .then(() => res.status(201).json({ message: "Vous avez aimé cette sauce !" }))
