@@ -5,10 +5,10 @@ const User = require('../models/user_model');
 
 //POUR S'INSCRIRE
 exports.signup = (req, res, next) => {
-  bcrypt.hash(req.body.password, 10)
+  bcrypt.hash(req.body.password, 10) // plus il y a de boucles, plus c'est dur de casser de code = salage du mdp
     .then(hash => {
       //ajouter regexp 
-      const reEmail = (/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i);
+      const reEmail = (/^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/i); //vérifie que l'email est correctement saisi
       let formValide = reEmail.test(email.toLowerCase());
       if (formValide) { 
         email
@@ -45,9 +45,9 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign(
+            token: jwt.sign( //encode le nouveau token
               { userId: user._id },
-              'RANDOM_TOKEN_SECRET',
+              'RANDOM_TOKEN_SECRET', //chaine de caractères secrets 
               { expiresIn: '24h' } //le token expire au bout de 24h
             )
           });
